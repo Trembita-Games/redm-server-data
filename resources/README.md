@@ -2,29 +2,41 @@
 
 Curated standalone RedM/RDR2 resources will be added here.
 
+This directory follows a RedM/txAdmin-style resource grouping layout.
+
+---
+
+## Resource Groups
+
+```txt
+resources/
+├── [gamemodes]/
+├── [gameplay]/
+├── [local]/
+├── [managers]/
+├── [standalone]/
+├── [system]/
+├── [test]/
+└── [trembita]/
+```
+
 ---
 
 ## Current Status
 
-No resources are included yet.
+No production-ready resources are included yet.
 
-This directory is reserved for standalone resources that improve or extend the vanilla server experience.
+This repository is currently used to document, investigate and gradually build a curated server data layer for improving a minimal RedM/RDR2 server experience.
 
 ---
 
-## Expected Future Structure
+## Important Notice
 
-Example:
+This repository does not vendor default Cfx.re resources.
 
-```txt
-resources/
-└── [standalone]/
-    └── example-resource/
-        ├── fxmanifest.lua
-        ├── config.lua
-        ├── client/
-        └── server/
-```
+This repository does not vendor third-party frameworks or resource packs.
+
+Folders are provided as placeholders and organizational boundaries only.
 
 ---
 
@@ -32,10 +44,10 @@ resources/
 
 Resources added here should be:
 
-- standalone
+- standalone where possible
 - documented
-- framework-agnostic where possible
+- reviewed before inclusion
 - compatible with `redm-vanilla-template`
-- tested before being recommended
+- separated by responsibility
 
 Resources should not vendor unrelated frameworks or large unreviewed resource packs.
