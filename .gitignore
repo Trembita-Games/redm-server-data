@@ -1,0 +1,36 @@
+﻿# Runtime cache
+cache/
+txData/
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+tmp/
+temp/
+.tmp/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Node modules
+node_modules/
+
+# Lua temporary files
+*.luac
+
+# Archives
+*.zip
+*.7z
+*.rar
