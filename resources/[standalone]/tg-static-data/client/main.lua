@@ -1,4 +1,4 @@
-﻿-- Client runtime for tg-static-data.
+-- Client runtime for tg-static-data.
 --
 -- This file applies static data defined in:
 -- - data/interiors.lua
@@ -30,7 +30,7 @@ end
 local function activateInterior(entry)
     if not entry or not entry.interiorId or not entry.entitySets then
         log('Skipping invalid interior entry.')
-        return
+        return false
     end
 
     local interiorName = entry.name or 'unknown'
@@ -38,16 +38,19 @@ local function activateInterior(entry)
     -- IsValidInterior prevents native calls against invalid/intermediate data.
     if not IsValidInterior(entry.interiorId) then
         log(('Invalid interior: %s (%s)'):format(interiorName, entry.interiorId))
-        return
+        return false
     end
 
     for _, entitySet in ipairs(entry.entitySets) do
-        -- Avoid activating the same entity set repeatedly when it is already active.
-        if not IsInteriorEntitySetActive(entry.interiorId, entitySet) then
+        if type(entitySet) ~= 'string' then
+            log(('Skipping invalid entity set for interior "%s".'):format(interiorName))
+        elseif not IsInteriorEntitySetActive(entry.interiorId, entitySet) then
+            -- Avoid activating the same entity set repeatedly when it is already active.
             ActivateInteriorEntitySet(entry.interiorId, entitySet, 0)
-            log(('Activated entity set "%s" for interior "%s".'):format(entitySet, interiorName))
         end
     end
+
+    return true
 end
 
 -- Applies all configured interior entries.
@@ -57,11 +60,15 @@ local function applyInteriors()
         return
     end
 
-    for _, entry in ipairs(TGStaticData.Interiors) do
-        activateInterior(entry)
+    local appliedCount = 0
+
+    for _, entry in ipairs(TGStaticData.Interiors or {}) do
+        if activateInterior(entry) then
+            appliedCount = appliedCount + 1
+        end
     end
 
-    log(('Applied interior entries: %d.'):format(#TGStaticData.Interiors))
+    log(('Applied interior entries: %d.'):format(appliedCount))
 end
 
 -- Applies all configured IMAP removals and requests.
@@ -77,26 +84,29 @@ local function applyImaps()
         return
     end
 
-    for _, entry in ipairs(TGStaticData.RemoveImaps) do
+    local removedCount = 0
+    local requestedCount = 0
+
+    for _, entry in ipairs(TGStaticData.RemoveImaps or {}) do
         if entry and entry.imap then
             RemoveImap(entry.imap)
-            log(('Removed IMAP "%s" (%s).'):format(entry.name or 'unknown', entry.imap))
+            removedCount = removedCount + 1
         else
             log('Skipping invalid remove IMAP entry.')
         end
     end
 
-    for _, entry in ipairs(TGStaticData.RequestImaps) do
+    for _, entry in ipairs(TGStaticData.RequestImaps or {}) do
         if entry and entry.imap then
             RequestImap(entry.imap)
-            log(('Requested IMAP "%s" (%s).'):format(entry.name or 'unknown', entry.imap))
+            requestedCount = requestedCount + 1
         else
             log('Skipping invalid request IMAP entry.')
         end
     end
 
-    log(('Removed IMAP entries: %d.'):format(#TGStaticData.RemoveImaps))
-    log(('Requested IMAP entries: %d.'):format(#TGStaticData.RequestImaps))
+    log(('Removed IMAP entries: %d.'):format(removedCount))
+    log(('Requested IMAP entries: %d.'):format(requestedCount))
 end
 
 -- Main initialization thread.

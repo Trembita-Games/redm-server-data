@@ -1,4 +1,4 @@
-﻿-- Runtime configuration for tg-static-data.
+-- Runtime configuration for tg-static-data.
 --
 -- Keep this file small and readable.
 -- Data itself should live in data/interiors.lua and data/imaps.lua.
@@ -25,6 +25,6 @@ Config.EnableImaps = true
 -- If some entries later appear unreliable on first spawn, this value can be increased.
 Config.StartupDelayMs = 1000
 
--- Skeleton mode means the resource is installed and working,
--- but it does not include production static world fixes yet.
-Config.SkeletonMode = true
+-- Skeleton mode can be enabled while testing an empty resource shell.
+-- Keep this false when production static data is loaded from data/*.lua.
+Config.SkeletonMode = false

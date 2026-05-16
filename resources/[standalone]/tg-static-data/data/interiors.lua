@@ -1,45 +1,716 @@
-﻿-- Interior static data.
+-- Interior static data.
 --
--- This file is intended for interior entity set definitions.
+-- Interior entity sets are named groups of objects inside an interior.
+-- Activating them can restore windows, curtains, furniture, shop props,
+-- and other static interior variants.
 --
--- Interior entity sets are named groups of interior objects.
--- Activating them can restore or enable objects such as:
--- - windows
--- - curtains
--- - furniture
--- - shop props
--- - interior decorations
--- - building/interior variants
---
--- Important:
--- Do not copy large third-party lists blindly.
--- Add entries gradually only after in-game verification.
+-- Test every new entry in-game before relying on it for world consistency.
 
 TGStaticData = TGStaticData or {}
 
--- Interior entries are intentionally empty for the initial skeleton.
---
--- Future example:
---
--- TGStaticData.Interiors = {
---     {
---         -- Human-readable name for documentation and logs.
---         name = 'Valentine bank',
---
---         -- Interior ID discovered and verified in-game.
---         interiorId = 12290,
---
---         -- Entity sets to activate for this interior.
---         entitySets = {
---             'val_bank_front_windows',
---             'val_bank_int_curtainsopen'
---         }
---     }
--- }
---
--- Rules for future entries:
--- - every entry must have a clear name
--- - every interiorId must be verified in-game
--- - every entity set must be tested in-game
--- - every change should be documented with location/coordinates when possible
-TGStaticData.Interiors = {}
+TGStaticData.Interiors = {
+    {
+        name = 'Valentine bank',
+        interiorId = 12290,
+        entitySets = {
+            'val_bank_front_windows',
+            'val_bank_int_curtainsopen',
+            'val_bank_int_vaults_dynamite',
+        }
+    },
+    {
+        name = 'Valentine saloon',
+        interiorId = 21250,
+        entitySets = {
+            'front_windows',
+            'val_saloon_br03_bed',
+            '6_chair_poker_set',
+        }
+    },
+    {
+        name = 'Valentine jail',
+        interiorId = 7170,
+        entitySets = {
+            'val_jail_int_walla',
+            'val_jail_int_wallb',
+        }
+    },
+    {
+        name = 'Valentine general store',
+        interiorId = 45826,
+        entitySets = {
+            'val_genstore_night_light',
+            '_p_apple01x_dressing',
+            '_p_apple01x_group',
+            '_p_bread06x_dressing',
+            '_p_bread06x_group',
+            '_p_carrots_01x_dressing',
+            '_p_carrots_01x_group',
+            '_p_cigar02x_dressing',
+            '_p_cigar02x_group',
+            '_p_cigarettebox01x_dressing',
+            '_p_cigarettebox01x_group',
+            '_p_corn02x_dressing',
+            '_p_corn02x_group',
+            '_p_int_fishing01_dressing',
+            '_p_package01x_dressing',
+            '_p_package01x_group',
+            '_p_pear_02x_dressing',
+            '_p_pear_02x_group',
+            '_p_tin_pomade01x_dressing',
+            '_p_tin_pomade01x_group',
+            '_p_tin_soap01x_dressing',
+            '_p_tin_soap01x_group',
+            '_s_biscuits01x_dressing',
+            '_s_biscuits01x_group',
+            '_s_canBeans01x_group',
+            '_s_canBeans01_dressing',
+            '_s_canCorn01x_dressing',
+            '_s_canCorn01x_group',
+            '_s_candyBag01x_red_group',
+            '_s_canPeaches01x_dressing',
+            '_s_canPeaches01x_group',
+            '_s_cheeseWedge1x_group',
+            '_s_chocolateBar02x_dressing',
+            '_s_chocolateBar02x_group',
+            '_s_coffeeTin01x_dressing',
+            '_s_coffeeTin01x_group',
+            '_s_crackers01x_dressing',
+            '_s_crackers01x_group',
+            '_s_cricketTin01x_dressing',
+            '_s_cricketTin01x_group',
+            '_s_gunOil01x_dressing',
+            '_s_gunOil01x_group',
+            '_s_inv_baitHerb01x_dressing',
+            '_s_inv_baitherb01x_group',
+            '_s_inv_baitMeat01x_dressing',
+            '_s_inv_baitmeat01x_group',
+            '_s_inv_gin01x_dressing',
+            '_s_inv_gin01x_group',
+            '_s_inv_horsePills01x_dressing',
+            '_s_inv_horsePills01x_group',
+            '_s_inv_pocketwatch04x_dressing',
+            '_s_inv_pocketWatch04x_group',
+            '_s_inv_rum01x_dressing',
+            '_s_inv_rum01x_group',
+            '_s_inv_tabacco01x_dressing',
+            '_s_inv_tabacco01x_group',
+            '_s_inv_whiskey01x_dressing',
+            '_s_inv_whiskey01x_group',
+            '_s_oatcakes01x_dressing',
+            '_s_oatcakes01x_group',
+            '_s_offal01x_dressing',
+            '_s_offal01x_group',
+            '_s_saltedbeef01x_group',
+            '_s_saltedbeef02x_group',
+            '_s_wormCan01x_dressing',
+            '_s_wormcan01x_group',
+        }
+    },
+    {
+        name = 'Valentine gun store',
+        interiorId = 63746,
+        entitySets = {
+            '_s_inv_arrowammo01x_dressing',
+            '_s_inv_highvlcty_pstAmmo01x_group',
+            '_s_inv_pistolAmmo01x_group',
+            '_s_inv_pistol_sign_dressing',
+            '_s_inv_repeater_sign_dressing',
+            '_s_inv_repeatHV_rifleammo01x_group',
+            '_s_inv_repeat_rifleammo01x_group',
+            '_s_inv_revolverAmmo01x_group',
+            '_s_inv_revolver_sign_dressing',
+            '_s_inv_rifleAmmo01x_group',
+            '_s_inv_rifle_sign_dressing',
+            '_s_inv_shotgunAmmo01x_group',
+            '_s_inv_shotgun_sign_dressing',
+            '_s_inv_slug_shotgunAmmo01x_group',
+            '_s_inv_varmint_rifleammo01x_group',
+        }
+    },
+    {
+        name = 'Riverboat',
+        interiorId = 51202,
+        entitySets = {
+            'korrigan_props_poker',
+        }
+    },
+    {
+        name = 'Riverboat',
+        interiorId = 60674,
+        entitySets = {
+            'korrigan_props_poker',
+        }
+    },
+    {
+        name = 'Beechers',
+        interiorId = 50690,
+        entitySets = {
+            'bee_01_masterBR_bed01',
+            'Beechers_decorated_after_Abigail3',
+            'IntGrp_livingrm_furniture_basic',
+            'bee_01_house_fireplace_on',
+            'BEECHERS_PIANO_STOOL',
+            'bee_01_house_chair',
+            'Beechers_fully_decorated_finale',
+            'Beechers_after_Marston8_Abigail2.2',
+        }
+    },
+    {
+        name = 'Bronte',
+        interiorId = 49154,
+        entitySets = {
+            'bronte_shutters_open',
+            'bronte_glass_unbreakable',
+        }
+    },
+    {
+        name = 'Braithwaite mansion',
+        interiorId = 72706,
+        entitySets = {
+            'bra_mansion_WindowsStatic',
+            'bra_int_bedroom_clean',
+        }
+    },
+    {
+        name = 'Character creator',
+        interiorId = 74241,
+        entitySets = {
+            'mp_char_female_mirror',
+        }
+    },
+    {
+        name = 'Trelawny caravan',
+        interiorId = 69122,
+        entitySets = {
+            'rho_slum_player_trelawny01_stage_01',
+        }
+    },
+    {
+        name = 'Aberdeen pig farm',
+        interiorId = 14338,
+        entitySets = {
+            'abe_farmhouse_chest',
+            'clean_abe',
+            'abe_SP_armoir',
+            'ABE_WORKROOM',
+            'p_lamphanging04x',
+            'p_washbasinset01x',
+        }
+    },
+    {
+        name = 'Emerald Ranch saloon',
+        interiorId = 45314,
+        entitySets = {
+            'eme_saloon_intgroup_curtains',
+            'eme_saloon_intgroup_furniture',
+        }
+    },
+    {
+        name = 'Blackwater general store',
+        interiorId = 61442,
+        entitySets = {
+            '_p_apple01x_dressing',
+            '_p_carrots_01x_dressing',
+            '_p_carrots_01x_group',
+            '_p_cigar02x_dressing',
+            '_p_cigar02x_group',
+            '_p_cigarettebox01x_dressing',
+            '_p_cigarettebox01x_group',
+            '_p_int_fishing01_dressing',
+            '_p_tin_pomade01x_dressing',
+            '_p_tin_pomade01x_group',
+            '_p_tin_soap01x_dressing',
+            '_p_tin_soap01x_group',
+            '_s_beardTonic01x_dressing',
+            '_s_beardTonic01x_group',
+            '_s_biscuits01x_dressing',
+            '_s_biscuits01x_group',
+            '_s_brandy01x_group',
+            '_s_canApricots01x_dressing',
+            '_s_canApricots01x_group',
+            '_s_candyBag01x_red_group',
+            '_s_canKidney01x_dressing',
+            '_s_cankidney01x_group',
+            '_s_canPeas01x_dressing',
+            '_s_canPeas01x_group',
+            '_s_cheeseWedge1x_group',
+            '_s_chocolateBar02x_dressing',
+            '_s_chocolateBar02x_group',
+            '_s_coffeeTin01x_dressing',
+            '_s_coffeeTin01x_group',
+            '_s_cornedBeef01x_dressing',
+            '_s_cornedBeef01x_group',
+            '_s_crackers01x_dressing',
+            '_s_crackers01x_group',
+            '_s_cricketTin01x_dressing',
+            '_s_cricketTin01x_group',
+            '_s_gunOil01x_dressing',
+            '_s_gunOil01x_group',
+            '_s_inv_baitHerb01x_dressing',
+            '_s_inv_baitherb01x_group',
+            '_s_inv_baitMeat01x_dressing',
+            '_s_inv_baitmeat01x_group',
+            '_s_inv_gin01x_dressing',
+            '_s_inv_gin01x_group',
+            '_s_inv_horsePills01x_dressing',
+            '_s_inv_horsePills01x_group',
+            '_s_inv_rum01x_dressing',
+            '_s_inv_rum01x_group',
+            '_s_inv_tabacco01x_dressing',
+            '_s_inv_tabacco01x_group',
+            '_s_inv_whiskey01x_dressing',
+            '_s_inv_whiskey01x_group',
+            '_s_oatcakes01x_dressing',
+            '_s_oatcakes01x_group',
+            '_s_peach01x_dressing',
+            '_s_peach01x_group',
+            '_s_saltedbeef01x_group',
+            '_s_saltedbeef02x_group',
+            '_s_wormCan01x_dressing',
+            '_s_wormcan01x_group',
+        }
+    },
+    {
+        name = 'Rhodes general store',
+        interiorId = 258,
+        entitySets = {
+            '_FIN2_EXT_P19_FRAMES_ON',
+            '_p_apple01x_dressing',
+            '_p_apple01x_group',
+            '_p_bread06x_dressing',
+            '_p_bread06x_group',
+            '_p_cigar02x_dressing',
+            '_p_cigar02x_group',
+            '_p_cigarettebox01x_dressing',
+            '_p_cigarettebox01x_group',
+            '_p_corn02x_dressing',
+            '_p_corn02x_group',
+            '_p_tin_pomade01x_dressing',
+            '_p_tin_pomade01x_group',
+            '_s_beardTonic01x_dressing',
+            '_s_beardTonic01x_group',
+            '_s_biscuits01x_dressing',
+            '_s_biscuits01x_group',
+            '_s_brandy01x_group',
+            '_s_candyBag01x_red_group',
+            '_s_canPeas01x_dressing',
+            '_s_canPeas01x_group',
+            '_s_canPineapple01x_dressing',
+            '_s_canPineapple01x_group',
+            '_s_canStrawberries01x_dressing',
+            '_s_canStrawberries01x_group',
+            '_s_cheeseWedge1x_dressing',
+            '_s_cheeseWedge1x_group',
+            '_s_chocolateBar02x_dressing',
+            '_s_chocolateBar02x_group',
+            '_s_coffeeTin01x_dressing',
+            '_s_coffeeTin01x_group',
+            '_s_cornedBeef01x_dressing',
+            '_s_cornedBeef01x_group',
+            '_s_inv_horsePills01x_dressing',
+            '_s_inv_horsePills01x_group',
+            '_s_inv_rum01x_dressing',
+            '_s_inv_rum01x_group',
+            '_s_inv_tabacco01x_dressing',
+            '_s_inv_tabacco01x_group',
+            '_s_inv_whiskey01x_dressing',
+            '_s_inv_whiskey01x_group',
+            '_s_oatcakes01x_dressing',
+            '_s_oatcakes01x_group',
+            '_s_peach01x_dressing',
+            '_s_peach01x_group',
+            '_s_saltedbeef01x_group',
+            '_s_saltedbeef02x_group',
+        }
+    },
+    {
+        name = 'Rhodes gun store',
+        interiorId = 8962,
+        entitySets = {
+            'p_fireplacelogs02x',
+            'rhoGunsmith_FireON',
+            'RHO_GUN_REGISTER',
+            '_s_inv_arrowammo01x_dressing',
+            '_s_inv_highvlcty_pstAmmo01x_group',
+            '_s_inv_highvlcty_revAmmo01x_group',
+            '_s_inv_highvlcty_rifleAmmo01x_group',
+            '_s_inv_pistolAmmo01x_group',
+            '_s_inv_pistol_sign_dressing',
+            '_s_inv_repeater_sign_dressing',
+            '_s_inv_repeatHV_rifleammo01x_group',
+            '_s_inv_repeat_rifleammo01x_group',
+            '_s_inv_revolverAmmo01x_group',
+            '_s_inv_revolver_sign_dressing',
+            '_s_inv_rifleAmmo01x_group',
+            '_s_inv_rifle_sign_dressing',
+            '_s_inv_shotgunAmmo01x_group',
+            '_s_inv_shotgun_sign_dressing',
+            '_s_inv_slug_shotgunAmmo01x_group',
+            '_s_inv_varmint_rifleammo01x_group',
+        }
+    },
+    {
+        name = 'Saint Denis gun store',
+        interiorId = 2050,
+        entitySets = {
+            '_s_inv_arrowammo01x_dressing',
+            '_s_inv_highvlcty_pstAmmo01x_group',
+            '_s_inv_highvlcty_revAmmo01x_group',
+            '_s_inv_highvlcty_rifleAmmo01x_group',
+            '_s_inv_pistolAmmo01x_dressing',
+            '_s_inv_pistolAmmo01x_group',
+            '_s_inv_revolverAmmo01x_dressing',
+            '_s_inv_revolverAmmo01x_group',
+            '_s_inv_rifleAmmo01x_dressing',
+            '_s_inv_rifleAmmo01x_group',
+            '_s_inv_shotgunAmmo01x_dressing',
+            '_s_inv_shotgunAmmo01x_group',
+            '_s_inv_slug_shotgunAmmo01x_group',
+            '_s_inv_varmint_rifleammo01x_group',
+        }
+    },
+    {
+        name = 'Saint Denis general store',
+        interiorId = 3074,
+        entitySets = {
+            '_p_bread06x_dressing',
+            '_p_bread06x_group',
+            '_p_cigar02x_dressing',
+            '_p_cigar02x_group',
+            '_p_cigarettebox01x_dressing',
+            '_p_cigarettebox01x_group',
+            '_s_biscuits01x_dressing',
+            '_s_biscuits01x_group',
+            '_s_brandy01x_group',
+            '_s_candyBag01x_red_group',
+            '_s_cheeseWedge1x_dressing',
+            '_s_cheeseWedge1x_group',
+            '_s_chocolateBar02x_dressing',
+            '_s_chocolateBar02x_group',
+            '_s_coffeeTin01x_dressing',
+            '_s_coffeeTin01x_group',
+            '_s_crackers01x_dressing',
+            '_s_crackers01x_group',
+            '_s_inv_gin01x_dressing',
+            '_s_inv_gin01x_group',
+            '_s_inv_rum01x_group',
+            '_s_inv_tabacco01x_dressing',
+            '_s_inv_tabacco01x_group',
+            '_s_inv_whiskey01x_dressing',
+            '_s_inv_whiskey01x_group',
+        }
+    },
+    {
+        name = 'Strawberry general store',
+        interiorId = 21506,
+        entitySets = {
+            '_p_apple01x_dressing',
+            '_p_apple01x_group',
+            '_p_carrots_01x_dressing',
+            '_p_carrots_01x_group',
+            '_p_cigar02x_dressing',
+            '_p_cigar02x_group',
+            '_p_cigarettebox01x_dressing',
+            '_p_cigarettebox01x_group',
+            '_p_int_fishing01_dressing',
+            '_p_tin_pomade01x_dressing',
+            '_p_tin_pomade01x_group',
+            '_p_tin_soap01x_dressing',
+            '_p_tin_soap01x_group',
+            '_saltedmeats_dressing',
+            '_s_biscuits01x_dressing',
+            '_s_biscuits01x_group',
+            '_s_canBeans01x_dressing',
+            '_s_canBeans01x_group',
+            '_s_canCorn01x_dressing',
+            '_s_canCorn01x_group',
+            '_s_canPeaches01x_dressing',
+            '_s_canPeaches01x_group',
+            '_s_canPeas01x_dressing',
+            '_s_canPeas01x_group',
+            '_s_coffeeTin01x_dressing',
+            '_s_coffeeTin01x_group',
+            '_s_crackers01x_dressing',
+            '_s_crackers01x_group',
+            '_s_cricketTin01x_dressing',
+            '_s_cricketTin01x_group',
+            '_s_inv_baitHerb01x_dressing',
+            '_s_inv_baitherb01x_group',
+            '_s_inv_baitMeat01x_dressing',
+            '_s_inv_baitmeat01x_group',
+            '_s_inv_gin01x_dressing',
+            '_s_inv_gin01x_group',
+            '_s_inv_horsePills01x_dressing',
+            '_s_inv_horsePills01x_group',
+            '_s_inv_pocketwatch04x_dressing',
+            '_s_inv_pocketWatch04x_group',
+            '_s_inv_tabacco01x_dressing',
+            '_s_inv_tabacco01x_group',
+            '_s_inv_whiskey01x_dressing',
+            '_s_inv_whiskey01x_group',
+            '_s_oatcakes01x_dressing',
+            '_s_oatcakes01x_group',
+            '_s_saltedbeef01x_group',
+            '_s_saltedbeef02x_group',
+            '_s_wormCan01x_dressing',
+            '_s_wormcan01x_group',
+        }
+    },
+    {
+        name = 'Saint Denis bank',
+        interiorId = 42754,
+        entitySets = {
+            'new_com_bank_before',
+            'new_com_bank_int_des',
+            'new_com_bank_vaults_without_rayfire',
+        }
+    },
+    {
+        name = 'Tumbleweed general store',
+        interiorId = 514,
+        entitySets = {
+            '_p_apple01x_dressing',
+            '_p_apple01x_group',
+            '_p_cigarettebox01x_dressing',
+            '_p_cigarettebox01x_group',
+            '_p_corn02x_dressing',
+            '_p_corn02x_group',
+            '_p_tin_pomade01x_dressing',
+            '_p_tin_pomade01x_group',
+            '_p_tin_soap01x_dressing',
+            '_p_tin_soap01x_group',
+            '_saltedmeats_dressing',
+            '_s_canCorn01x_dressing',
+            '_s_canCorn01x_group',
+            '_s_canPeas01x_dressing',
+            '_s_canPeas01x_group',
+            '_s_canStrawberries01x_dressing',
+            '_s_canStrawberries01x_group',
+            '_s_coffeeTin01x_dressing',
+            '_s_coffeeTin01x_group',
+            '_s_gunOil01x_dressing',
+            '_s_gunOil01x_group',
+            '_s_inv_baitHerb01x_dressing',
+            '_s_inv_baitherb01x_group',
+            '_s_inv_baitMeat01x_dressing',
+            '_s_inv_baitmeat01x_group',
+            '_s_inv_gin01x_dressing',
+            '_s_inv_gin01x_group',
+            '_s_inv_tabacco01x_dressing',
+            '_s_inv_tabacco01x_group',
+            '_s_inv_whiskey01x_dressing',
+            '_s_inv_whiskey01x_group',
+            '_s_oatcakes01x_dressing',
+            '_s_oatcakes01x_group',
+            '_s_saltedbeef01x_group',
+            '_s_saltedbeef02x_group',
+        }
+    },
+    {
+        name = 'Tumbleweed gun store',
+        interiorId = 11778,
+        entitySets = {
+            'tum_gunsmith_int_rentSign',
+            '_s_inv_arrowammo01x_dressing',
+            '_s_inv_highvlcty_pstAmmo01x_group',
+            '_s_inv_highvlcty_revAmmo01x_group',
+            '_s_inv_highvlcty_rifleAmmo01x_group',
+            '_s_inv_pistolAmmo01x_group',
+            '_s_inv_pistol_sign_dressing',
+            '_s_inv_repeater_sign_dressing',
+            '_s_inv_repeatHV_rifleammo01x_group',
+            '_s_inv_repeatXS_rifleammo01x_group',
+            '_s_inv_repeat_rifleammo01x_group',
+            '_s_inv_revolverAmmo01x_group',
+            '_s_inv_revolver_sign_dressing',
+            '_s_inv_rifleAmmo01x_group',
+            '_s_inv_rifle_sign_dressing',
+            '_s_inv_shotgunAmmo01x_group',
+            '_s_inv_shotgun_sign_dressing',
+            '_s_inv_slug_shotgunAmmo01x_group',
+            '_s_inv_varmint_rifleammo01x_group',
+            '_s_inv_xpres_pstAmmo01x_group',
+            '_s_inv_xpres_revAmmo01x_group',
+            '_s_inv_xpres_rifleAmmo01x_group',
+        }
+    },
+    {
+        name = 'Rhodes bank',
+        interiorId = 29442,
+        entitySets = {
+            'rhobank_int_walla',
+        }
+    },
+    {
+        name = 'Carmody Dell',
+        interiorId = 28418,
+        entitySets = {
+            '_car_house_int_before_ransack',
+            '_car_house_int_day',
+        }
+    },
+    {
+        name = 'Saint Denis doctor',
+        interiorId = 34562,
+        entitySets = {
+            'SD_doc_curtain01',
+            '_s_candyBag01x_red_group',
+            '_s_chocolateBar02x_dressing',
+            '_s_chocolateBar02x_group',
+            '_s_inv_CocaineGum01x_dressing',
+            '_s_inv_CocaineGum01x_group',
+            '_s_inv_medicine01x_dressing',
+            '_s_inv_medicine01x_group',
+            '_s_inv_medicine_fty_dressing',
+            '_s_inv_medicine_fty_group',
+            '_s_inv_supertonic01x_dressing',
+            '_s_inv_supertonic01x_group',
+            '_s_inv_tonic01x_dressing',
+            '_s_inv_tonic01x_group',
+        }
+    },
+    {
+        name = 'Geddes Ranch worker quarters',
+        interiorId = 39938,
+        entitySets = {
+            'pro_int_shaving',
+            'pro_worker_bedmade',
+            'pro_worker_food',
+            'pro_worker_jack_bed_ambient',
+        }
+    },
+    {
+        name = 'Shady Belle',
+        interiorId = 24834,
+        entitySets = {
+            'shb_arthurpickup_bookforage',
+            'shb_arthurpickup_bookhunting',
+            'shb_p_ammo01',
+            'shb_p_ammo02',
+            'shb_p_ammo03',
+            'shb_p_industry_outro',
+            'shb_p_mansion_01',
+            'shb_p_mansion_fasttravel',
+            'shb_p_mansion_pulp_eden',
+            'shb_p_mansion_pulp_inferno',
+            'shb_upg_arthur_chest',
+            'shb_upg_arthur_rug',
+            'shb_upg_arthur_table',
+            'shb_upg_john_rug',
+            'shb_upg_skull_gator',
+            'shb_upg_skull_ram',
+        }
+    },
+    {
+        name = 'Galarie',
+        interiorId = 26626,
+        entitySets = {
+            'new_art_photos_pre_RC_Mason',
+            'new_forMyArt_paintings',
+        }
+    },
+    {
+        name = 'Willards Rest',
+        interiorId = 72450,
+        entitySets = {
+            'rocky_int_clean',
+        }
+    },
+    {
+        name = 'Wallace Station general store',
+        interiorId = 65282,
+        entitySets = {
+            '_p_cigarettebox01x_dressing',
+            '_p_cigarettebox01x_group',
+            '_p_tin_pomade01x_dressing',
+            '_p_tin_pomade01x_group',
+            '_saltedmeats_dressing',
+            '_s_biscuits01x_dressing',
+            '_s_biscuits01x_group',
+            '_s_crackers01x_dressing',
+            '_s_crackers01x_group',
+            '_s_gunOil01x_dressing',
+            '_s_gunOil01x_group',
+            '_s_inv_CocaineGum01x_dressing',
+            '_s_inv_CocaineGum01x_group',
+            '_s_inv_tabacco01x_dressing',
+            '_s_inv_tabacco01x_group',
+            '_s_inv_whiskey01x_dressing',
+            '_s_inv_whiskey01x_group',
+            '_s_saltedbeef01x_group',
+            '_s_saltedbeef02x_group',
+        }
+    },
+    {
+        name = 'Armadillo general store',
+        interiorId = 3842,
+        entitySets = {
+            '_p_cigar02x_dressing',
+            '_p_cigar02x_group',
+            '_p_tin_pomade01x_dressing',
+            '_p_tin_pomade01x_group',
+            '_s_biscuits01x_dressing',
+            '_s_biscuits01x_group',
+            '_s_crackers01x_dressing',
+            '_s_crackers01x_group',
+            '_s_inv_arrowammo01x_dressing',
+            '_s_inv_baitHerb01x_dressing',
+            '_s_inv_baitherb01x_group',
+            '_s_inv_baitMeat01x_dressing',
+            '_s_inv_baitmeat01x_group',
+            '_s_inv_pistolAmmo01x_dressing',
+            '_s_inv_pistolAmmo01x_group',
+            '_s_inv_revolverAmmo01x_dressing',
+            '_s_inv_revolverAmmo01x_group',
+            '_s_inv_rifleAmmo01x_dressing',
+            '_s_inv_rifleAmmo01x_group',
+            '_s_inv_shotgunAmmo01x_dressing',
+            '_s_inv_shotgunAmmo01x_group',
+            '_s_inv_tabacco01x_dressing',
+            '_s_inv_tabacco01x_group',
+            '_s_inv_whiskey01x_dressing',
+            '_s_inv_whiskey01x_group',
+        }
+    },
+    {
+        name = 'Annesburg gun store',
+        interiorId = 2818,
+        entitySets = {
+            'ann_gunsmith_int_rent',
+            '_sign_pistolAmmo_dressing',
+            '_sign_revolverAmmo_dressing',
+            '_sign_rifleAmmo_dressing',
+            '_sign_shotgunAmmo_dressing',
+            '_s_inv_arrowammo01x_dressing',
+            '_s_inv_highvlcty_pstAmmo01x_group',
+            '_s_inv_highvlcty_revAmmo01x_group',
+            '_s_inv_highvlcty_rifleAmmo01x_group',
+            '_s_inv_pistolAmmo01x_group',
+            '_s_inv_repeatHV_rifleammo01x_group',
+            '_s_inv_repeat_rifleammo01x_dressing',
+            '_s_inv_repeat_rifleammo01x_group',
+            '_s_inv_revolverAmmo01x_group',
+            '_s_inv_rifleAmmo01x_group',
+            '_s_inv_shotgunAmmo01x_group',
+            '_s_inv_slug_shotgunAmmo01x_group',
+            '_s_inv_varmint_rifleammo01x_group',
+        }
+    },
+    {
+        name = 'Chez Porter',
+        interiorId = 2,
+        entitySets = {
+            'che_cabin_int_roof_intact',
+            'che_maincabin_occupied',
+        }
+    },
+    {
+        name = 'Downes Home',
+        interiorId = 9986,
+        entitySets = {
+            'IntGroup_Downes_before_move',
+            'IntGroup_Downes_pulp_novel',
+        }
+    },
+}

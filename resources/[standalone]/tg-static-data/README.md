@@ -1,48 +1,27 @@
-﻿# tg-static-data
+# tg-static-data
 
 Standalone Trembita Games static world data resource for RedM/RDR2 servers.
 
-This resource is intended to manage static world consistency data, including missing static objects, windows, buildings, interiors, props and IMAP-based world corrections.
-
----
+This resource contains initial static interior and IMAP data used to keep the world state consistent across clients. It has no external gameplay framework dependency and should stay usable as a standalone resource.
 
 ## Purpose
 
-`tg-static-data` exists to provide an original Trembita Games static data layer for RedM/RDR2 servers.
+`tg-static-data` is used for static world consistency data, such as:
 
-The initial motivation is to investigate and gradually fix issues observed on minimal RedM servers, such as:
+- interior entity sets
+- missing or alternate building parts
+- windows, curtains, furniture, and shop props
+- requested IMAP world chunks
+- removed IMAP world chunks that conflict with the desired world state
 
-- missing windows
-- missing building parts
-- disappearing buildings
-- missing static props
-- missing or incomplete interiors
-- inconsistent static world state
-- location-specific world loading differences
+The resource should stay small and data-driven. Runtime code applies the data, while actual static entries live in the `data/` directory.
 
-This resource should stay framework-agnostic.
-
-It must not depend on external gameplay frameworks, database layers, inventory systems, character systems, economy systems or roleplay systems.
-
----
-
-## Repository Location
-
-```txt
-resources/[standalone]/tg-static-data/
-```
-
-This resource is placed under `[standalone]` because it should be usable independently from any custom server framework or core layer.
-
-The `tg-` prefix identifies Trembita Games ownership.
-
----
-
-## Resource Structure
+## Structure
 
 ```txt
 tg-static-data/
 ├── README.md
+├── NOTICE.md
 ├── fxmanifest.lua
 ├── config.lua
 ├── client/
@@ -52,134 +31,32 @@ tg-static-data/
     └── imaps.lua
 ```
 
-This structure is intentionally kept simple and repeatable.
-
-Future standalone resources should follow a similar layout when possible:
-
-```txt
-resource-name/
-├── README.md
-├── fxmanifest.lua
-├── config.lua
-├── client/
-└── data/
-```
-
----
-
-## Current Scope
-
-Current scope:
-
-- standalone resource skeleton
-- client startup logging
-- empty static data structures
-- interior entity set activation pipeline
-- IMAP request/remove pipeline
-- no production static fixes yet
-- no third-party code copied into this repository
-
-This first version is intentionally safe and minimal.
-
----
-
 ## Files
 
-### `fxmanifest.lua`
+`data/interiors.lua` contains interior entity set entries. These entries tell the client which named entity sets should be activated for a specific interior ID.
 
-Resource manifest.
+`data/imaps.lua` contains IMAP request and remove entries. IMAPs are map or world chunks that can change static buildings, construction stages, terrain patches, props, and other world variants.
 
-Defines RedM/RDR3 compatibility and loads:
+`client/main.lua` is a small data-driven runtime. It waits for the configured startup delay, removes configured IMAPs, requests configured IMAPs, activates configured interior entity sets, and logs summary counts when debug logging is enabled.
 
-```txt
-config.lua
-data/interiors.lua
-data/imaps.lua
-client/main.lua
-```
+`config.lua` controls debug logging, feature toggles, startup delay, and skeleton mode.
 
-### `config.lua`
-
-Runtime configuration.
-
-Current options:
+## Configuration
 
 ```lua
 Config.Debug = true
+Config.ResourceName = 'tg-static-data'
 Config.EnableInteriors = true
 Config.EnableImaps = true
 Config.StartupDelayMs = 1000
-Config.SkeletonMode = true
+Config.SkeletonMode = false
 ```
 
-### `data/interiors.lua`
+Set `Config.Debug` to `false` after the imported data has been tested and startup logs are no longer needed.
 
-Future interior entity set data.
+## Adding Data
 
-Currently empty.
-
-### `data/imaps.lua`
-
-Future IMAP request/remove data.
-
-Currently empty.
-
-### `client/main.lua`
-
-Client runtime logic.
-
-Applies configured interior and IMAP entries.
-
----
-
-## Installation
-
-Add the resource to your server resources directory:
-
-```txt
-resources/[standalone]/tg-static-data/
-```
-
-Then add it to `server.cfg`:
-
-```cfg
-ensure tg-static-data
-```
-
-Recommended position:
-
-```cfg
-ensure mapmanager
-ensure chat
-ensure spawnmanager
-ensure sessionmanager-rdr3
-ensure basic-gamemode
-ensure hardcap
-ensure rconlog
-
-ensure tg-static-data
-```
-
----
-
-## Expected Logs
-
-When the resource starts with the default empty skeleton data, client logs should include:
-
-```txt
-[tg-static-data] Starting static data initialization.
-[tg-static-data] Skeleton mode is enabled. No production static world fixes are included yet.
-[tg-static-data] Applied interior entries: 0.
-[tg-static-data] Removed IMAP entries: 0.
-[tg-static-data] Requested IMAP entries: 0.
-[tg-static-data] Static data initialization completed.
-```
-
----
-
-## Interior Data Format
-
-Future interior entries should use this format:
+Add interior entries to `data/interiors.lua`:
 
 ```lua
 TGStaticData.Interiors = {
@@ -194,117 +71,50 @@ TGStaticData.Interiors = {
 }
 ```
 
-Rules:
-
-- every entry must have a clear `name`
-- every entry must have a verified `interiorId`
-- every entity set must be tested in-game
-- every added entry must be documented
-
----
-
-## IMAP Data Format
-
-Future IMAP request entries should use this format:
+Add IMAP entries to `data/imaps.lua`:
 
 ```lua
 TGStaticData.RequestImaps = {
     {
-        name = 'Example requested IMAP',
-        imap = 123456789,
-        notes = 'Short explanation of what this enables.'
+        name = 'Valentine completed green building',
+        imap = 903666582,
+        notes = 'Imported from static data reference.'
     }
 }
-```
 
-Future IMAP remove entries should use this format:
-
-```lua
 TGStaticData.RemoveImaps = {
     {
-        name = 'Example removed IMAP',
-        imap = -123456789,
-        notes = 'Short explanation of what this removes.'
+        name = 'Valentine sheriff office crumbled wall parts',
+        imap = 774477221,
+        notes = 'Imported from static data reference.'
     }
 }
 ```
 
-Rules:
+Every added entry should be tested in-game. IMAP combinations can conflict with each other, so verify the target location before and after each change.
 
-- every entry must have a clear `name`
-- every entry must have a verified `imap`
-- every entry should include notes when the effect is known
-- every added entry must be tested in-game
+## Runtime Behavior
 
----
+On client startup, the resource:
 
-## How to Add a New Static Data Entry
+1. waits `Config.StartupDelayMs`
+2. applies interior entity sets from `TGStaticData.Interiors`
+3. removes IMAPs from `TGStaticData.RemoveImaps`
+4. requests IMAPs from `TGStaticData.RequestImaps`
+5. logs applied counts when `Config.Debug` is enabled
 
-1. Reproduce the issue in-game.
-2. Record the exact location and coordinates.
-3. Identify the needed interior entity set or IMAP.
-4. Add the entry to the correct data file.
-5. Start the server and connect with a client.
-6. Verify the target location before and after the change.
-7. Document the result.
-
-Use `data/interiors.lua` for interior entity sets.
-
-Use `data/imaps.lua` for IMAP request/remove operations.
-
----
-
-## Development Rules
-
-Do:
-
-- keep the resource standalone
-- keep configuration readable
-- document every added static data entry
-- test changes in-game
-- record coordinates for every verified fix
-- keep changes original to Trembita Games
-
-Do not:
-
-- copy third-party resource code without license review
-- silently add external framework dependencies
-- add database dependencies
-- add gameplay or roleplay logic
-- mix static world corrections with economy, inventory or character systems
-
----
+The runtime does not include database logic, server-side scripts, inventory logic, economy logic, or gameplay systems.
 
 ## Testing Checklist
 
-For every new static data entry, test:
+For each data change, verify:
 
 - server startup
 - client connection
 - resource startup logs
-- target location before change
-- target location after change
+- target location before the change
+- target location after the change
 - reconnect behavior
 - server restart behavior
-- behavior with at least two players when possible
 
-Record:
-
-```txt
-Location:
-Coordinates:
-Issue:
-Expected behavior:
-Actual behavior before fix:
-Actual behavior after fix:
-Resource entry:
-Notes:
-```
-
----
-
-## Status
-
-Initial skeleton resource.
-
-No production-ready static world fixes are included yet.
+Record the location, coordinates, expected result, actual result, and the exact data entry that was changed.

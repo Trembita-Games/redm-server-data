@@ -1,4 +1,4 @@
-﻿-- Resource manifest for tg-static-data.
+-- Resource manifest for tg-static-data.
 --
 -- fxmanifest.lua is required by FXServer/RedM.
 -- It tells the server what game this resource targets and which scripts to load.
