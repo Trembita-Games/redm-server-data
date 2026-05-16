@@ -1525,6 +1525,56 @@ TGStaticData.RequestImaps = {
         imap = -1632348233,
         notes = 'Imported from static data reference.',
     },
+    {
+        name = 'Moonshine shell MP006_A3SUPP_MOONSHINE01',
+        imap = 'MP006_A3SUPP_MOONSHINE01',
+        notes = 'Moonshine shell static data.',
+    },
+    {
+        name = 'Moonshine shell MP006_A3SUPP_MOONSHINE01_PLUG',
+        imap = 'MP006_A3SUPP_MOONSHINE01_PLUG',
+        notes = 'Moonshine shell static data.',
+    },
+    {
+        name = 'Moonshine shell MP006_A2SUPP_MOONSHINE02',
+        imap = 'MP006_A2SUPP_MOONSHINE02',
+        notes = 'Moonshine shell static data.',
+    },
+    {
+        name = 'Moonshine shell MP006_A2SUPP_MOONSHINE02_PLUG',
+        imap = 'MP006_A2SUPP_MOONSHINE02_PLUG',
+        notes = 'Moonshine shell static data.',
+    },
+    {
+        name = 'Moonshine shell MP006_A4SUPP_MOONSHINE03',
+        imap = 'MP006_A4SUPP_MOONSHINE03',
+        notes = 'Moonshine shell static data.',
+    },
+    {
+        name = 'Moonshine shell MP006_A4SUPP_MOONSHINE03_PLUG',
+        imap = 'MP006_A4SUPP_MOONSHINE03_PLUG',
+        notes = 'Moonshine shell static data.',
+    },
+    {
+        name = 'Moonshine shell MP006_A1SUPP_MOONSHINE04',
+        imap = 'MP006_A1SUPP_MOONSHINE04',
+        notes = 'Moonshine shell static data.',
+    },
+    {
+        name = 'Moonshine shell MP006_A1SUPP_MOONSHINE04_PLUG',
+        imap = 'MP006_A1SUPP_MOONSHINE04_PLUG',
+        notes = 'Moonshine shell static data.',
+    },
+    {
+        name = 'Moonshine shell MP006_A4SUPP_MOONSHINE05',
+        imap = 'MP006_A4SUPP_MOONSHINE05',
+        notes = 'Moonshine shell static data.',
+    },
+    {
+        name = 'Moonshine shell MP006_A4SUPP_MOONSHINE05_PLUG',
+        imap = 'MP006_A4SUPP_MOONSHINE05_PLUG',
+        notes = 'Moonshine shell static data.',
+    },
 }
 
 TGStaticData.RemoveImaps = {

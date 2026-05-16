@@ -713,4 +713,89 @@ TGStaticData.Interiors = {
             'IntGroup_Downes_pulp_novel',
         }
     },
+    {
+        name = 'Moonshine shack - Lemoyne',
+        interiorId = 77313,
+        entitySets = {
+            'mp006_mshine_band2',
+            'mp006_mshine_bar_benchAndFrame',
+            'mp006_mshine_dressing_3',
+            'mp006_mshine_hidden_door_open',
+            'mp006_mshine_location2',
+            'mp006_mshine_pic_04',
+            'mp006_mshine_shelfwall1',
+            'mp006_mshine_shelfwall2',
+            'mp006_mshine_Still_03',
+            'mp006_mshine_still_hatch',
+            'mp006_mshine_theme_hunter',
+        }
+    },
+    {
+        name = 'Moonshine shack - Cattail Pond',
+        interiorId = 77569,
+        entitySets = {
+            'mp006_mshine_band2',
+            'mp006_mshine_bar_benchAndFrame',
+            'mp006_mshine_dressing_1',
+            'mp006_mshine_hidden_door_open',
+            'mp006_mshine_location1',
+            'mp006_mshine_pic_09',
+            'mp006_mshine_shelfwall1',
+            'mp006_mshine_shelfwall2',
+            'mp006_mshine_Still_02',
+            'mp006_mshine_still_hatch',
+            'mp006_mshine_theme_goth',
+        }
+    },
+    {
+        name = 'Moonshine shack - New Austin',
+        interiorId = 78337,
+        entitySets = {
+            'mp006_mshine_band2',
+            'mp006_mshine_bar_benchAndFrame',
+            'mp006_mshine_dressing_1',
+            'mp006_mshine_hidden_door_open',
+            'mp006_mshine_location1',
+            'mp006_mshine_pic_09',
+            'mp006_mshine_shelfwall1',
+            'mp006_mshine_shelfwall2',
+            'mp006_mshine_Still_02',
+            'mp006_mshine_still_hatch',
+            'mp006_mshine_theme_refined',
+        }
+    },
+    {
+        name = 'Moonshine shack - Hanover',
+        interiorId = 78593,
+        entitySets = {
+            'mp006_mshine_band2',
+            'mp006_mshine_bar_benchAndFrame',
+            'mp006_mshine_dressing_1',
+            'mp006_mshine_hidden_door_open',
+            'mp006_mshine_location1',
+            'mp006_mshine_pic_09',
+            'mp006_mshine_shelfwall1',
+            'mp006_mshine_shelfwall2',
+            'mp006_mshine_Still_02',
+            'mp006_mshine_still_hatch',
+            'mp006_mshine_theme_floral',
+        }
+    },
+    {
+        name = 'Moonshine shack - Manzanita Post',
+        interiorId = 77825,
+        entitySets = {
+            'mp006_mshine_band2',
+            'mp006_mshine_bar_benchAndFrame',
+            'mp006_mshine_dressing_1',
+            'mp006_mshine_hidden_door_open',
+            'mp006_mshine_location1',
+            'mp006_mshine_pic_09',
+            'mp006_mshine_shelfwall1',
+            'mp006_mshine_shelfwall2',
+            'mp006_mshine_Still_03',
+            'mp006_mshine_still_hatch',
+            'mp006_mshine_theme_hunter',
+        }
+    },
 }

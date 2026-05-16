@@ -17,6 +17,16 @@ local function log(message)
     end
 end
 
+-- IMAP entries can use numeric hashes or readable string names.
+-- String names are resolved only when the runtime applies the data.
+local function resolveImap(imap)
+    if type(imap) == 'string' then
+        return GetHashKey(imap)
+    end
+
+    return imap
+end
+
 -- Activates all configured entity sets for one interior entry.
 --
 -- Expected entry shape:
@@ -89,7 +99,7 @@ local function applyImaps()
 
     for _, entry in ipairs(TGStaticData.RemoveImaps or {}) do
         if entry and entry.imap then
-            RemoveImap(entry.imap)
+            RemoveImap(resolveImap(entry.imap))
             removedCount = removedCount + 1
         else
             log('Skipping invalid remove IMAP entry.')
@@ -98,7 +108,7 @@ local function applyImaps()
 
     for _, entry in ipairs(TGStaticData.RequestImaps or {}) do
         if entry and entry.imap then
-            RequestImap(entry.imap)
+            RequestImap(resolveImap(entry.imap))
             requestedCount = requestedCount + 1
         else
             log('Skipping invalid request IMAP entry.')

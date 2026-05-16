@@ -2,7 +2,7 @@
 
 Standalone Trembita Games static world data resource for RedM/RDR2 servers.
 
-This resource contains initial static interior and IMAP data used to keep the world state consistent across clients. It has no external gameplay framework dependency and should stay usable as a standalone resource.
+This resource contains initial static interior and IMAP data used to keep the world state consistent across clients. It includes static town/world entries plus moonshine shell and interior entries. It has no external gameplay framework dependency and should stay usable as a standalone resource.
 
 ## Purpose
 
@@ -13,6 +13,7 @@ This resource contains initial static interior and IMAP data used to keep the wo
 - windows, curtains, furniture, and shop props
 - requested IMAP world chunks
 - removed IMAP world chunks that conflict with the desired world state
+- moonshine shell/interior static data represented as plain data entries
 
 The resource should stay small and data-driven. Runtime code applies the data, while actual static entries live in the `data/` directory.
 
@@ -38,6 +39,8 @@ tg-static-data/
 `data/imaps.lua` contains IMAP request and remove entries. IMAPs are map or world chunks that can change static buildings, construction stages, terrain patches, props, and other world variants.
 
 `client/main.lua` is a small data-driven runtime. It waits for the configured startup delay, removes configured IMAPs, requests configured IMAPs, activates configured interior entity sets, and logs summary counts when debug logging is enabled.
+
+No interaction, teleport, prompt, or blip logic is included. This resource only applies static world data.
 
 `config.lua` controls debug logging, feature toggles, startup delay, and skeleton mode.
 
