@@ -1,0 +1,45 @@
+﻿-- Interior static data.
+--
+-- This file is intended for interior entity set definitions.
+--
+-- Interior entity sets are named groups of interior objects.
+-- Activating them can restore or enable objects such as:
+-- - windows
+-- - curtains
+-- - furniture
+-- - shop props
+-- - interior decorations
+-- - building/interior variants
+--
+-- Important:
+-- Do not copy large third-party lists blindly.
+-- Add entries gradually only after in-game verification.
+
+TGStaticData = TGStaticData or {}
+
+-- Interior entries are intentionally empty for the initial skeleton.
+--
+-- Future example:
+--
+-- TGStaticData.Interiors = {
+--     {
+--         -- Human-readable name for documentation and logs.
+--         name = 'Valentine bank',
+--
+--         -- Interior ID discovered and verified in-game.
+--         interiorId = 12290,
+--
+--         -- Entity sets to activate for this interior.
+--         entitySets = {
+--             'val_bank_front_windows',
+--             'val_bank_int_curtainsopen'
+--         }
+--     }
+-- }
+--
+-- Rules for future entries:
+-- - every entry must have a clear name
+-- - every interiorId must be verified in-game
+-- - every entity set must be tested in-game
+-- - every change should be documented with location/coordinates when possible
+TGStaticData.Interiors = {}
