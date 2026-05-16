@@ -61,10 +61,59 @@ Current scope:
 - empty door data structure
 - door registration pipeline
 - door state application pipeline
+- debug command for collecting door object data
 - no production door entries yet
 - no gameplay interaction logic
 
 This first version is intentionally safe and minimal.
+
+---
+
+## Debug Command
+
+The resource provides a debug command:
+
+```txt
+/tgdoor
+```
+
+Use it to collect data for a blocked door.
+
+Workflow:
+
+1. Stand close to a blocked door.
+2. Aim the camera directly at the door object.
+3. Run:
+
+```txt
+/tgdoor
+```
+
+4. Check the client console output.
+5. Copy the generated entry into:
+
+```txt
+data/doors.lua
+```
+
+The command prints:
+
+```txt
+entity id
+entity type
+model hash
+coordinates
+heading
+ready-to-copy door entry template
+```
+
+The generated `doorHash` is intentionally a TODO value.
+
+You should replace it with a unique readable identifier, for example:
+
+```lua
+doorHash = 'TG_VALENTINE_BANK_FRONT_DOOR_01'
+```
 
 ---
 
@@ -92,6 +141,8 @@ Current options:
 Config.Debug = true
 Config.EnableDoorRegistration = true
 Config.EnableDoorStates = true
+Config.EnableDebugCommands = true
+Config.DebugRayDistance = 8.0
 Config.StartupDelayMs = 1000
 Config.PhysicsTimeoutMs = 5000
 Config.PhysicsCheckIntervalMs = 100
@@ -108,7 +159,7 @@ Currently empty.
 
 Client runtime logic.
 
-Registers configured doors and applies configured door states.
+Registers configured doors, applies configured door states and exposes the `/tgdoor` debug command.
 
 ---
 
@@ -142,6 +193,7 @@ When the resource starts with the default empty skeleton data, client logs shoul
 ```txt
 [tg-door-data] Starting door data initialization.
 [tg-door-data] Skeleton mode is enabled. No production door entries are included yet.
+[tg-door-data] Debug command registered: /tgdoor
 [tg-door-data] Configured door entries: 0.
 [tg-door-data] Door data initialization completed.
 ```
@@ -201,13 +253,18 @@ Other state values are available in `data/doors.lua`, but should be used only af
 ## How to Add a New Door Entry
 
 1. Reproduce the issue in-game.
-2. Record the exact location and coordinates.
-3. Identify the door object model.
-4. Decide the desired default door state.
-5. Add the entry to `data/doors.lua`.
-6. Start the server and connect with a client.
-7. Verify the door before and after the change.
-8. Restart the resource and verify the door again.
+2. Stand close to the blocked door.
+3. Aim the camera at the door.
+4. Run:
+
+```txt
+/tgdoor
+```
+
+5. Copy the generated entry into `data/doors.lua`.
+6. Replace the generated TODO name and `doorHash`.
+7. Restart the resource.
+8. Verify the door before and after the change.
 9. Restart the server and verify the door again.
 
 ---
@@ -241,6 +298,7 @@ For every new door entry, test:
 - server startup
 - client connection
 - resource startup logs
+- `/tgdoor` debug command output
 - door location before change
 - door location after change
 - reconnect behavior

@@ -16,6 +16,23 @@ local function log(message)
     end
 end
 
+-- Shows a short in-game chat message.
+--
+-- The generated door template is still printed to the F8 client console.
+-- Chat is used only as a small confirmation for easier testing.
+local function notify(message)
+    if not Config.EnableDebugChatMessages then
+        return
+    end
+
+    TriggerEvent('chat:addMessage', {
+        args = {
+            'tg-door-data',
+            message
+        }
+    })
+end
+
 -- Converts either a numeric hash or a string name into a hash value.
 --
 -- Numeric values are returned as-is.
@@ -133,6 +150,116 @@ local function applyDoors()
     end
 end
 
+-- Converts camera rotation to a forward direction vector.
+--
+-- This is used by /tgdoor to cast a ray from the camera toward the object
+-- the player is looking at.
+local function rotationToDirection(rotation)
+    local adjustedRotation = {
+        x = math.rad(rotation.x),
+        y = math.rad(rotation.y),
+        z = math.rad(rotation.z)
+    }
+
+    local cosX = math.cos(adjustedRotation.x)
+
+    return vector3(
+        -math.sin(adjustedRotation.z) * cosX,
+        math.cos(adjustedRotation.z) * cosX,
+        math.sin(adjustedRotation.x)
+    )
+end
+
+-- Returns the entity currently targeted by the gameplay camera ray.
+--
+-- This helps collect object model and coordinate data for blocked doors.
+local function getEntityFromCameraRay()
+    local cameraCoords = GetGameplayCamCoord()
+    local cameraRotation = GetGameplayCamRot(2)
+    local direction = rotationToDirection(cameraRotation)
+
+    local targetCoords = vector3(
+        cameraCoords.x + direction.x * Config.DebugRayDistance,
+        cameraCoords.y + direction.y * Config.DebugRayDistance,
+        cameraCoords.z + direction.z * Config.DebugRayDistance
+    )
+
+    local rayHandle = StartShapeTestRay(
+        cameraCoords.x,
+        cameraCoords.y,
+        cameraCoords.z,
+        targetCoords.x,
+        targetCoords.y,
+        targetCoords.z,
+        -1,
+        PlayerPedId(),
+        0
+    )
+
+    local _, hit, hitCoords, _, entity = GetShapeTestResult(rayHandle)
+
+    return hit == 1, entity, hitCoords
+end
+
+-- Prints a ready-to-copy door entry template for data/doors.lua.
+local function printDoorEntryTemplate(entity, hitCoords)
+    local entityCoords = GetEntityCoords(entity)
+    local modelHash = GetEntityModel(entity)
+    local heading = GetEntityHeading(entity)
+    local entityType = GetEntityType(entity)
+
+    local coords = entityCoords or hitCoords
+
+    print('')
+    print(('[%s] Door debug result:'):format(resourceName))
+    print(('Entity: %s'):format(entity))
+    print(('Entity type: %s'):format(entityType))
+    print(('Model hash: %s'):format(modelHash))
+    print(('Coordinates: %.4f, %.4f, %.4f'):format(coords.x, coords.y, coords.z))
+    print(('Heading: %.4f'):format(heading))
+    print('')
+    print('Copy this entry into data/doors.lua and replace TODO values:')
+    print('')
+    print('{')
+    print('    name = \'TODO door name\',')
+    print('    doorHash = \'TG_TODO_DOOR_01\',')
+    print(('    modelHash = %s,'):format(modelHash))
+    print(('    coords = vector3(%.4f, %.4f, %.4f),'):format(coords.x, coords.y, coords.z))
+    print('    state = TGDoorData.States.unlocked,')
+    print('    waitForPhysics = true,')
+    print(('    notes = \'Captured with /tgdoor. Heading: %.4f.\''):format(heading))
+    print('}')
+    print('')
+end
+
+-- Registers debug command for collecting door object data.
+--
+-- Usage:
+-- 1. Stand near a blocked door.
+-- 2. Aim the camera at the door.
+-- 3. Run /tgdoor in the client console or chat command input.
+-- 4. Copy the printed entry into data/doors.lua.
+local function registerDebugCommands()
+    if not Config.EnableDebugCommands then
+        return
+    end
+
+    RegisterCommand('tgdoor', function()
+        local hit, entity, hitCoords = getEntityFromCameraRay()
+
+        if not hit or not entity or entity == 0 then
+            log('No entity found. Move closer to the door and aim directly at it.')
+            notify('No entity found. Move closer and aim directly at the door.')
+            return
+        end
+
+        printDoorEntryTemplate(entity, hitCoords)
+        notify('Door data captured. Check F8 console for the generated entry.')
+    end, false)
+
+    log('Debug command registered: /tgdoor')
+end
+
 -- Main initialization thread.
 --
 -- Runs once on the client after a short startup delay.
@@ -146,6 +273,7 @@ CreateThread(function()
         log('Skeleton mode is enabled. No production door entries are included yet.')
     end
 
+    registerDebugCommands()
     applyDoors()
 
     log('Door data initialization completed.')

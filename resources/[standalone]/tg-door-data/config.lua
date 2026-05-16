@@ -19,6 +19,24 @@ Config.EnableDoorRegistration = true
 -- Enables applying door lock/open states through DoorSystemSetDoorState.
 Config.EnableDoorStates = true
 
+-- Enables debug commands for collecting door object data in-game.
+--
+-- Keep this enabled while investigating blocked doors.
+-- Disable it later if the commands are no longer needed on a public server.
+Config.EnableDebugCommands = true
+
+-- Shows short chat messages after debug command execution.
+--
+-- The full generated door entry is still printed to the F8 client console,
+-- because it is too long for normal chat output.
+Config.EnableDebugChatMessages = true
+
+-- Ray distance for the /tgdoor debug command.
+--
+-- The command casts a ray from the gameplay camera forward.
+-- Increase this value if the command does not hit the door from a normal standing distance.
+Config.DebugRayDistance = 8.0
+
 -- Delay before applying door data after the client script starts.
 --
 -- This gives RedM a short moment to initialize the client world state.
@@ -27,7 +45,7 @@ Config.StartupDelayMs = 1000
 
 -- Maximum time to wait for door physics before applying a state.
 --
--- DoorSystem states may not apply correctly until physics is loaded.
+-- DoorSystem states may not apply correctly before physics is loaded.
 -- Keeping a timeout prevents the script from waiting forever on bad door data.
 Config.PhysicsTimeoutMs = 5000
 
