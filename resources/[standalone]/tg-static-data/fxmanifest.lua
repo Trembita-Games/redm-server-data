@@ -21,12 +21,11 @@ lua54 'yes'
 -- We keep configuration and static data here so client/main.lua can use them.
 shared_scripts {
     'config.lua',
-    'data/interiors.lua',
-    'data/imaps.lua'
+    'data/*.lua'
 }
 
 -- Client script runs on each connected player's RedM client.
 -- Static world/interior/IMAP operations are client-side in this resource.
 client_scripts {
-    'client/main.lua'
+    'client/*.lua'
 }

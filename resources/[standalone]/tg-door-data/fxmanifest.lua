@@ -21,11 +21,11 @@ lua54 'yes'
 -- We keep configuration and door data here so client/main.lua can use them.
 shared_scripts {
     'config.lua',
-    'data/doors.lua'
+    'data/*.lua'
 }
 
 -- Client script runs on each connected player's RedM client.
 -- Door state operations are client-side in this resource.
 client_scripts {
-    'client/main.lua'
+    'client/*.lua'
 }
