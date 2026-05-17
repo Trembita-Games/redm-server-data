@@ -1,4 +1,4 @@
-﻿# System
+# System
 
 System-level resources may be placed here.
 

@@ -1,4 +1,4 @@
-﻿# Gamemodes
+# Gamemodes
 
 Resources related to game modes may be placed here.
 

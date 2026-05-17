@@ -1,4 +1,4 @@
-﻿# Resources
+# Resources
 
 Curated standalone RedM/RDR2 resources will be added here.
 

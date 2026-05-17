@@ -1,4 +1,4 @@
-﻿# Managers
+# Managers
 
 Manager-style resources may be placed here.
 

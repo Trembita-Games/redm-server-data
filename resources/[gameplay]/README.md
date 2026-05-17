@@ -1,4 +1,4 @@
-﻿# Gameplay
+# Gameplay
 
 Gameplay-related standalone resources may be placed here.
 

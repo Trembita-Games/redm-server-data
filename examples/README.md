@@ -1,4 +1,4 @@
-﻿# Examples
+# Examples
 
 Example configuration snippets for using resources from `redm-server-data`.
 

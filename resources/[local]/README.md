@@ -1,4 +1,4 @@
-﻿# Local
+# Local
 
 Local-only resources and development experiments may be placed here.
 

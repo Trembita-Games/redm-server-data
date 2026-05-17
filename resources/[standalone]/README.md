@@ -1,4 +1,4 @@
-﻿# Standalone
+# Standalone
 
 Standalone resources should be placed here.
 

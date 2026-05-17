@@ -1,4 +1,4 @@
-﻿# Trembita
+# Trembita
 
 Original Trembita Games resources will be placed here.
 
