@@ -1,0 +1,245 @@
+name: Validate Repository
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+
+jobs:
+  validate:
+    name: Validate repository structure
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Validate required files
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          required_files=(
+            "README.md"
+            "LICENSE"
+            ".gitignore"
+            ".gitattributes"
+            ".editorconfig"
+            "docs/README.md"
+            "docs/resource-catalog.md"
+          )
+
+          for file in "${required_files[@]}"; do
+            if [ ! -f "$file" ]; then
+              echo "Missing required file: $file"
+              exit 1
+            fi
+          done
+
+      - name: Validate required directories
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          required_dirs=(
+            "docs"
+            "examples"
+            "resources"
+          )
+
+          for dir in "${required_dirs[@]}"; do
+            if [ ! -d "$dir" ]; then
+              echo "Missing required directory: $dir"
+              exit 1
+            fi
+          done
+
+      - name: Validate malformed paths
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          if git ls-files | grep -E '\`'; then
+            echo "Malformed paths containing backticks detected"
+            exit 1
+          fi
+
+      - name: Validate generated runtime files are not tracked
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          forbidden_patterns=(
+            "cache/*"
+            "txData/*"
+            "logs/*"
+            "tmp/*"
+            "temp/*"
+            ".env"
+            ".replxx_history"
+          )
+
+          for pattern in "${forbidden_patterns[@]}"; do
+            if git ls-files -- "$pattern" | grep -q .; then
+              echo "Forbidden runtime/local path is tracked by Git: $pattern"
+              git ls-files -- "$pattern"
+              exit 1
+            fi
+          done
+
+      - name: Validate .gitignore rules
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          required_rules=(
+            ".idea/"
+            "cache/"
+            "txData/"
+            ".env"
+          )
+
+          for rule in "${required_rules[@]}"; do
+            if ! grep -Fxq "$rule" .gitignore; then
+              echo "Missing .gitignore rule: $rule"
+              exit 1
+            fi
+          done
+
+      - name: Validate .gitattributes rules
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          required_rules=(
+            "*.lua text eol=lf"
+            "*.sh text eol=lf"
+            "*.ps1 text eol=crlf"
+            "*.md text eol=lf"
+            "*.cfg text eol=lf"
+            "*.json text eol=lf"
+            "*.yaml text eol=lf"
+            "*.png binary"
+            "*.7z binary"
+            "*.zip binary"
+          )
+
+          for rule in "${required_rules[@]}"; do
+            if ! grep -Fxq "$rule" .gitattributes; then
+              echo "Missing .gitattributes rule: $rule"
+              exit 1
+            fi
+          done
+
+      - name: Validate UTF-8 BOM
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          failed=0
+
+          while IFS= read -r -d '' file; do
+            if head -c 3 "$file" | grep -q $'\xEF\xBB\xBF'; then
+              echo "UTF-8 BOM detected: $file"
+              failed=1
+            fi
+          done < <(find . -type f \
+            ! -path "./.git/*" \
+            ! -path "./node_modules/*")
+
+          if [ "$failed" -ne 0 ]; then
+            exit 1
+          fi
+
+      - name: Validate trailing newline
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          failed=0
+
+          while IFS= read -r -d '' file; do
+            if [ -s "$file" ]; then
+              last_char=$(tail -c 1 "$file" || true)
+
+              if [ -n "$last_char" ]; then
+                echo "Missing trailing newline: $file"
+                failed=1
+              fi
+            fi
+          done < <(find . -type f \
+            ! -path "./.git/*" \
+            ! -name "*.png" \
+            ! -name "*.jpg" \
+            ! -name "*.jpeg" \
+            ! -name "*.gif" \
+            ! -name "*.ico" \
+            ! -name "*.7z" \
+            ! -name "*.zip" \
+            ! -name "*.rar")
+
+          if [ "$failed" -ne 0 ]; then
+            exit 1
+          fi
+
+      - name: Validate LF line endings
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          failed=0
+
+          while IFS= read -r -d '' file; do
+            if grep -Iq . "$file"; then
+              if grep -q $'\r' "$file"; then
+                echo "CRLF detected in LF-only file: $file"
+                failed=1
+              fi
+            fi
+          done < <(find . -type f \( \
+            -name "*.lua" -o \
+            -name "*.cfg" -o \
+            -name "*.conf" -o \
+            -name "*.json" -o \
+            -name "*.md" -o \
+            -name "*.txt" -o \
+            -name "*.yml" -o \
+            -name "*.yaml" -o \
+            -name "*.sh" \
+          \))
+
+          if [ "$failed" -ne 0 ]; then
+            exit 1
+          fi
+
+      - name: Validate resource structure
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          while IFS= read -r -d '' resource_dir; do
+            if [ ! -f "${resource_dir}/fxmanifest.lua" ]; then
+              echo "Missing fxmanifest.lua in: ${resource_dir}"
+              exit 1
+            fi
+          done < <(find resources -mindepth 2 -maxdepth 2 -type d -print0)
+
+      - name: Validate resource naming
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          while IFS= read -r -d '' resource_dir; do
+            resource_name=$(basename "$resource_dir")
+
+            if [[ ! "$resource_name" =~ ^[a-z0-9._-]+$ ]]; then
+              echo "Invalid resource name: $resource_name"
+              exit 1
+            fi
+          done < <(find resources -mindepth 2 -maxdepth 2 -type d -print0)
