@@ -1,5 +1,7 @@
 # redm-server-data
 
+[![Validate Repository](https://github.com/Trembita-Games/redm-server-data/actions/workflows/validate.yaml/badge.svg)](https://github.com/Trembita-Games/redm-server-data/actions/workflows/validate.yaml)
+
 Curated standalone RedM/RDR2 server resources for improving the vanilla server experience.
 
 This repository is intended to complement [`redm-vanilla-template`](https://github.com/Trembita-Games/redm-vanilla-template) with optional server resources, world baseline improvements and documented testing workflows.

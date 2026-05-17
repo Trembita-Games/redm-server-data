@@ -65,7 +65,7 @@ jobs:
         run: |
           set -euo pipefail
 
-          if git ls-files | grep -E '\`'; then
+          if git ls-files | grep -F '`'; then
             echo "Malformed paths containing backticks detected"
             exit 1
           fi
